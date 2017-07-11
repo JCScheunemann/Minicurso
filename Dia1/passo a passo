@@ -1,0 +1,24 @@
+#=============Icarus=============
+#Geração do modelo do  Verilog
+iverilog -o multi multiplicador.v multiplicador_tb.v
+#Executa o modelo
+vvp multi
+#Visualizar a wave form
+gtkwave Multiplicador1.vcd
+
+
+#=============Verilator==========
+#Geração do modelo com o verilator
+verilator -Wall --cc --trace multiplicador.v --exe multiplicador_tb.cpp
+#Compila o modelo do verilator
+make -j -C obj_dir/ -f Vmultiplicador.mk Vmultiplicador
+#executa o modelo
+obj_dir/Vmultiplicador
+#Visualizar a wave form
+gtkwave Multiplicador2.vcd
+
+#===============Qflow=================
+#criação dos arquivos de configuração 
+qflow TopModule
+#sinteze lógica
+qflow synthesize TopModule
